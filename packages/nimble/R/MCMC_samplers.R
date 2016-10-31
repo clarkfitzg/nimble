@@ -226,7 +226,7 @@ sampler_RW_block <- nimbleFunction(
                 adaptFactor <- my_calcAdaptationFactor$run(acceptanceRate)
                 scale <<- scale * adaptFactor
                 ## calculate empirical covariance, and adapt proposal covariance
-                if(!adaptScaleOnly) {
+                if(!adaptScaleOnly & acceptanceRate > 0.15) {
                     gamma1 <- my_calcAdaptationFactor$gamma1
                     for(i in 1:d)     empirSamp[, i] <<- empirSamp[, i] - mean(empirSamp[, i])
                     empirCov <- (t(empirSamp) %*% empirSamp) / (timesRan-1)
